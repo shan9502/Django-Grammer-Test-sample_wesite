@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+  
+{% block title %}Login{% endblock %}
+<style type="text/css">
+  h6 { display: inline; }
+</style>
+{% block content %}
+   <h2>Welcome!</h2>
+   {% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <h7><br><br>Choose your answers from the options below,<br>you can't change the answer once selected<br></h7>&nbsp;
+      <h6><b style="color: #87CEEB;">No of Questions : </b>{{count}} more to go.</h6>
+      <br><h3>Question:</h3><h3>{{ id }}. <b>{{ quest }}</b></h3><br>
+      {% for tag in fields %}
+      <form method="post" action="/test_page">
+        {% csrf_token %}
+      <button type="submit" value="{{ tag.id }}">
+        {{ tag }}</button><br><br>
+      {% endfor %}
+    </form>
+      <!-- {% load crispy_forms_tags %}
+			{{ fields | safe }} -->
+    {% else %}
+      <a href="/signin" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span>Login</a> 
+      <a href="/signup" class="btn btn-success">Signup</a>
+    {% endif %}
+{% endblock %}
